@@ -1,0 +1,79 @@
+<mxfile host="app.diagrams.net" modified="2026-08-28T00:00:00.000Z" agent="Claude" version="24.0.0" type="device">
+  <diagram name="Architecture ECS + Kubernetes" id="arch-ecs-k8s">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Git repo -->
+        <mxCell id="git" value="Depot Git&#10;(Terraform + Jenkinsfile + manifestes)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;fontSize=13;fontStyle=1;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="440" y="40" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Jenkins pipeline -->
+        <mxCell id="jenkins" value="Pipeline Jenkins&#10;validate -&gt; plan -&gt; approbation -&gt; apply" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontSize=13;fontStyle=1;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="410" y="160" width="280" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Terraform -->
+        <mxCell id="terraform" value="Terraform&#10;provider aws + provider kubernetes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontSize=13;fontStyle=1;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="410" y="280" width="280" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ECS container -->
+        <mxCell id="ecs_container" value="Amazon ECS Fargate (AWS Academy - us-east-1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontSize=14;fontStyle=1;verticalAlign=top;align=left;spacingLeft=15;spacingTop=10;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="80" y="420" width="360" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="ecr" value="ECR&#10;(depot images taggees)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#D85A30;fontSize=12;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="110" y="470" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ecs_service" value="Service Fargate&#10;desired_count=2, LabRole" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#D85A30;fontSize=12;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="290" y="470" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ecs_sg" value="Security Group restreint&#10;+ ALB / IP publique" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#D85A30;fontSize=12;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="110" y="550" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ecs_auto" value="Auto-reparation&#10;(scheduler ECS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#D85A30;fontSize=12;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="290" y="550" width="130" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- K8s container -->
+        <mxCell id="k8s_container" value="Kubernetes Minikube (cluster local)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontSize=14;fontStyle=1;verticalAlign=top;align=left;spacingLeft=15;spacingTop=10;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="660" y="420" width="360" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="k8s_deploy" value="Deployment&#10;(replicas + ConfigMap)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#D85A30;fontSize=12;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="690" y="470" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="k8s_svc" value="Service + Ingress" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#D85A30;fontSize=12;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="870" y="470" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="k8s_hpa" value="HorizontalPodAutoscaler&#10;(metrics-server)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#D85A30;fontSize=12;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="690" y="550" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="k8s_policy" value="Garde-fou securite&#10;(NetworkPolicy / Kyverno)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#D85A30;fontSize=12;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="870" y="550" width="130" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;" edge="1" parent="1" source="git" target="jenkins">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#534AB7;strokeWidth=1.5;" edge="1" parent="1" source="jenkins" target="terraform">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#0F6E56;strokeWidth=1.5;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="terraform" target="ecs_container">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#0F6E56;strokeWidth=1.5;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="terraform" target="k8s_container">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend" value="Legende: gris = versioning, violet = automatisation, vert = plateforme cible, corail = ressource deployee" style="text;html=1;fontSize=11;fontColor=#666666;align=left;" vertex="1" parent="1">
+          <mxGeometry x="80" y="700" width="600" height="30" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
